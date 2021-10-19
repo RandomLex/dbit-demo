@@ -8,6 +8,7 @@ import java.util.Properties;
 @Slf4j
 public class RepositoryFactory {
     private static final RepositoryTypes TYPE;
+    private static RepositoryDatasource datasource;
 
     static {
         Properties appProperties = new Properties();
@@ -17,6 +18,13 @@ public class RepositoryFactory {
             log.error(e.getMessage(), e);
         }
         TYPE = RepositoryTypes.getTypeByStr(appProperties.getProperty("repository.type"));
+        if (TYPE == RepositoryTypes.POSTGRES) {
+            datasource = RepositoryDatasource.getInstance(
+                    appProperties.getProperty("postgres.driver"),
+                    appProperties.getProperty("postgres.uri"),
+                    appProperties.getProperty("postgres.user"),
+                    appProperties.getProperty("postgres.password"));
+        }
     }
 
     private RepositoryFactory() {
@@ -25,6 +33,8 @@ public class RepositoryFactory {
 
     public static EmployeeRepository getEmployeeRepository() {
         switch (TYPE) {
+            case POSTGRES:
+                return EmployeeRepositoryPostgres.getInstance(datasource);
             case MEMORY:
             default:
                 return EmployeeRepositoryInMemory.getInstance();
