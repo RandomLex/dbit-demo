@@ -8,7 +8,9 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
@@ -19,7 +21,7 @@ public class Employee extends AbstractEntity {
     private String name;
     private Title title;
     private int salary;
-    private List<Department> departments = new ArrayList<>();
+    private Set<Department> departments = new HashSet<>();
 
     public Employee withId(Integer id) {
         setId(id);
