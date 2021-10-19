@@ -14,6 +14,10 @@
             <td><c:out value="${employee.name}"/></td>
             <td><c:out value="${employee.salary}"/></td>
             <td><c:out value="${empty employee.title ? '---' : employee.title.name}"/></td>
+            <c:set value="${employee.departments}" scope="page" var="departments"/>
+            <c:forEach items="${departments}" var="deparment">
+                <td><c:out value="${empty deparment ? '---' : deparment.name} (${deparment.city.name})"/></td>
+            </c:forEach>
         </tr>
     </c:forEach>
 </table>

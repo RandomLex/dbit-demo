@@ -31,4 +31,11 @@ public class City extends AbstractEntity {
         return this;
     }
 
+    public City addDepartment(Department department) {
+        if (department != null) {
+            departments.add(department);
+        }
+        return this;
+    }
+
 }
