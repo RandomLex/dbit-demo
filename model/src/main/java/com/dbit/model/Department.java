@@ -1,6 +1,9 @@
 package com.dbit.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,9 +19,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Department extends AbstractEntity {
     private String name;
     private City city;
+//    @JsonBackReference
     private List<Employee> employees = new ArrayList<>();
 
     public Department withId(Integer id) {
