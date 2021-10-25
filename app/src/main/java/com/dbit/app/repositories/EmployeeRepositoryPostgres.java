@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-public class EmployeeRepositoryPostgres implements EmployeeRepository {
+public class EmployeeRepositoryPostgres extends AbstractRepository<Employee> implements EmployeeRepository {
     //language=SQL
     private static final String SELECT_FROM_EMPLOYEE_ALL_FIELDS =
             "select " +
@@ -52,7 +52,6 @@ public class EmployeeRepositoryPostgres implements EmployeeRepository {
     private static final String T_NAME = "t_name";
     private static final String D_NAME = "d_name";
     private static final String C_NAME = "c_name";
-    private static final int POSITION_ID = 1;
     private static final String INSERT_EMPLOYEE_SQL = "insert into employee (name, salary) values (?, ?) returning id";
     //language=SQL
     private static final String UPDATE_EMPLOYEE_SQL = "update employee e set name = ?, salary = ?" + ONE_ENTITY_FILTER;
@@ -60,7 +59,6 @@ public class EmployeeRepositoryPostgres implements EmployeeRepository {
     private static final String DELETE_EMPLOYEE_BY_ID = "delete from employee e" + ONE_ENTITY_FILTER;
 
     private static volatile EmployeeRepositoryPostgres instance;
-    private final DataSource dataSource;
 
     private EmployeeRepositoryPostgres(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -78,101 +76,42 @@ public class EmployeeRepositoryPostgres implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> findAll() {
-        List<Employee> result;
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(SELECT_FROM_EMPLOYEE_ALL_FIELDS);
-             ResultSet rs = ps.executeQuery()) {
-            result = resultSetToEmployees(rs);
-        } catch (SQLException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e);
-        }
-        return result;
+    protected String selectAllFields() {
+        return SELECT_FROM_EMPLOYEE_ALL_FIELDS;
     }
 
     @Override
-    public Optional<Employee> find(int id) {
-        List<Employee> result;
-        ResultSet rs = null;
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(FIND_EMPLOYEE_BY_ID)) {
-            ps.setInt(POSITION_ID, id);
-            rs = ps.executeQuery();
-            result = resultSetToEmployees(rs);
-        } catch (SQLException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e);
-        } finally {
-            closeQuietly(rs);
-        }
-        return result.stream().findAny();
-    }
-
-    private static void closeQuietly(AutoCloseable closeable) {
-        if (closeable == null) {
-            return;
-        }
-        try {
-            closeable.close();
-        } catch (Exception e) {
-            log.error("Couldn't close {}", closeable);
-        }
+    protected String findById() {
+        return FIND_EMPLOYEE_BY_ID;
     }
 
     @Override
-    public Employee save(Employee employee) {
-        return employee.getId() == null ? insert(employee) : update(employee);
-    }
-
-    private Employee insert(Employee employee) {
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(INSERT_EMPLOYEE_SQL)) {
-            ps.setString(1, employee.getName());
-            ps.setInt(2, employee.getSalary());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return employee.withId(rs.getInt(POSITION_ID));
-            }
-            return null;
-        } catch (SQLException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e);
-        }
-    }
-
-    private Employee update(Employee employee) {
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(UPDATE_EMPLOYEE_SQL)) {
-            ps.setString(1, employee.getName());
-            ps.setInt(2, employee.getSalary());
-            ps.setInt(3, employee.getId());
-            if (ps.executeUpdate() > 0) {
-                return employee;
-            }
-            return null;
-        } catch (SQLException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e);
-        }
+    protected String insertSql() {
+        return INSERT_EMPLOYEE_SQL;
     }
 
     @Override
-    public Optional<Employee> remove(Employee employee) {
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(DELETE_EMPLOYEE_BY_ID)) {
-            ps.setInt(1, employee.getId());
-            if (ps.executeUpdate() > 0) {
-                return Optional.of(employee);
-            }
-            return Optional.empty();
-        } catch (SQLException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e);
-        }
+    protected String updateSql() {
+        return UPDATE_EMPLOYEE_SQL;
     }
 
-    private List<Employee> resultSetToEmployees(ResultSet rs) throws SQLException {
+    @Override
+    protected String deleteSql() {
+        return DELETE_EMPLOYEE_BY_ID;
+    }
+
+    public void insertLogic(Employee employee, PreparedStatement ps) throws SQLException {
+        ps.setString(1, employee.getName());
+        ps.setInt(2, employee.getSalary());
+    }
+
+    public void updateLogic(Employee employee, PreparedStatement ps) throws SQLException {
+        ps.setString(1, employee.getName());
+        ps.setInt(2, employee.getSalary());
+    }
+
+    @Override
+    public List<Employee> resultSetToEntities(ResultSet rs) throws SQLException {
         Map<Integer, Employee> employeeMap = new LinkedHashMap<>();
         Map<Integer, Department> departmentMap = new LinkedHashMap<>();
         Map<Integer, City> cityMap = new LinkedHashMap<>();
@@ -208,11 +147,5 @@ public class EmployeeRepositoryPostgres implements EmployeeRepository {
         return values.isEmpty() ? new ArrayList<>() : new ArrayList<>(values);
     }
 
-    private static <K, V> V putIfAbsentAndReturn(Map<K, V> map, K key, V value) {
-        if (key == null) {
-            return null;
-        }
-        map.putIfAbsent(key, value);
-        return map.get(key);
-    }
+
 }
