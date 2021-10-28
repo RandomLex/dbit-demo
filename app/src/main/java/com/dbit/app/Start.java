@@ -1,5 +1,6 @@
 package com.dbit.app;
 
+import com.dbit.app.repositories.EntityManagerHelper;
 import com.dbit.model.Title;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,9 +12,9 @@ import javax.persistence.EntityTransaction;
 
 public class Start {
     public static void main(String[] args) {
-        Configuration cfg = new Configuration().configure();
-        SessionFactory sessionFactory = cfg.buildSessionFactory();
-        EntityManager em = sessionFactory.createEntityManager();
+//        Configuration cfg = new Configuration().configure();
+//        SessionFactory sessionFactory = cfg.buildSessionFactory();
+        EntityManager em = EntityManagerHelper.getInstance().getEntityManager();
 
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -23,7 +24,9 @@ public class Start {
         System.out.println("!!!" + title);
 
         tx.commit();
-        sessionFactory.close();
+
+
+//        sessionFactory.close();
 
 //        Session session = sessionFactory.openSession();
 //        Transaction tx = session.beginTransaction();
