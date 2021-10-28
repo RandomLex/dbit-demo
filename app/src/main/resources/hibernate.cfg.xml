@@ -28,6 +28,9 @@
 
         <!-- mapping files -->
         <mapping resource="Title.hbm.xml"/>
+        <mapping resource="Employee.hbm.xml"/>
+        <mapping resource="Department.hbm.xml"/>
+        <mapping resource="City.hbm.xml"/>
 
     </session-factory>
 

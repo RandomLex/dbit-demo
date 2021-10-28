@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "departments")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

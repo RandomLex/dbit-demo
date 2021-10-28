@@ -10,18 +10,21 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.With;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = "departments")
+@EqualsAndHashCode(callSuper = true, exclude = "departments")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class City extends AbstractEntity {
     private String name;
-    private List<Department> departments = new ArrayList<>();
+    private Set<Department> departments = new LinkedHashSet<>();
 
     public City withId(Integer id) {
         setId(id);

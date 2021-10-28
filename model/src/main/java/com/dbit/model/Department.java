@@ -12,10 +12,12 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = "employees")
+@EqualsAndHashCode(callSuper = true, exclude = "employees")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +26,7 @@ public class Department extends AbstractEntity {
     private String name;
     private City city;
 //    @JsonBackReference
-    private List<Employee> employees = new ArrayList<>();
+    private Set<Employee> employees = new LinkedHashSet<>();
 
     public Department withId(Integer id) {
         setId(id);
