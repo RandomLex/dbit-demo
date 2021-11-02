@@ -1,6 +1,8 @@
 package com.dbit.app;
 
 import com.dbit.app.repositories.EntityManagerHelper;
+import com.dbit.model.City;
+import com.dbit.model.Department;
 import com.dbit.model.Employee;
 import com.dbit.model.Title;
 import org.hibernate.Session;
@@ -18,14 +20,25 @@ public class Start {
 //        Configuration cfg = new Configuration().configure();
 //        SessionFactory sessionFactory = cfg.buildSessionFactory();
 
-
         EntityManager em = EntityManagerHelper.getInstance().getEntityManager();
-
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        Title title = em.find(Title.class, 6);
-        em.remove(title);
+
+        Employee employee = em.find(Employee.class, 1);
+        printWithPrefix(employee);
+
+        //One-To-Many
+//        Department department = em.find(Department.class, 1);
+//        printWithPrefix(department);
+
+
+        //One-To-One
+//        Employee employee = em.find(Employee.class, 1);
+
+//        printWithPrefix(employee);
+
+//        em.remove(title);
 
 //        Employee newEmployee = new Employee()
 //                .withName("Джон")
@@ -33,9 +46,9 @@ public class Start {
 //                        .withName("CTO"));
 //        em.persist(newEmployee);
 //
-        TypedQuery<Employee> employeesQuery = em.createQuery("from Employee", Employee.class);
-        List<Employee> employees = employeesQuery.getResultList();
-        employees.stream().forEach(System.out::println);
+//        TypedQuery<Employee> employeesQuery = em.createQuery("from Employee", Employee.class);
+//        List<Employee> employees = employeesQuery.getResultList();
+//        employees.stream().forEach(System.out::println);
 
 
 
@@ -63,5 +76,9 @@ public class Start {
 //
 //        tx.commit();
 //        session.close();
+    }
+
+    private static void printWithPrefix(Object obj) {
+        System.out.println("!!!" + obj);
     }
 }

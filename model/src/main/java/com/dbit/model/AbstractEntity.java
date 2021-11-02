@@ -12,7 +12,10 @@ import javax.persistence.MappedSuperclass;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@MappedSuperclass
 public abstract class AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     public AbstractEntity withId(Integer id) {

@@ -8,12 +8,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.With;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import java.util.ArrayList;
+import javax.persistence.OneToMany;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @ToString(callSuper = true, exclude = "departments")
@@ -22,15 +21,16 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Entity
 public class City extends AbstractEntity {
     private String name;
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
     private Set<Department> departments = new LinkedHashSet<>();
 
     public City withId(Integer id) {
         setId(id);
         return this;
     }
-
 
     public City withName(String name) {
         setName(name);

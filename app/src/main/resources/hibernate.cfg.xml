@@ -27,10 +27,16 @@
 
 
         <!-- mapping files -->
-        <mapping resource="Title.hbm.xml"/>
-        <mapping resource="Employee.hbm.xml"/>
-        <mapping resource="Department.hbm.xml"/>
-        <mapping resource="City.hbm.xml"/>
+<!--        <mapping resource="Title.hbm.xml"/>-->
+<!--        <mapping resource="Employee.hbm.xml"/>-->
+<!--        <mapping resource="Department.hbm.xml"/>-->
+<!--        <mapping resource="City.hbm.xml"/>-->
+
+        <!-- mapping classes -->
+        <mapping class="com.dbit.model.Title"/>
+        <mapping class="com.dbit.model.City"/>
+        <mapping class="com.dbit.model.Employee"/>
+        <mapping class="com.dbit.model.Department"/>
 
     </session-factory>
 
