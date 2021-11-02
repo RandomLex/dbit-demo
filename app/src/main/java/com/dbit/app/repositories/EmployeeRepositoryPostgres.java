@@ -1,6 +1,5 @@
 package com.dbit.app.repositories;
 
-import com.dbit.app.exceptions.DatabaseException;
 import com.dbit.model.City;
 import com.dbit.model.Department;
 import com.dbit.model.Employee;
@@ -8,20 +7,17 @@ import com.dbit.model.Title;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
-public class EmployeeRepositoryPostgres extends AbstractRepository<Employee> implements EmployeeRepository {
+public class EmployeeRepositoryPostgres extends AbstractRepositoryPostgres<Employee> implements EmployeeRepository {
     //language=SQL
     private static final String SELECT_FROM_EMPLOYEE_ALL_FIELDS =
             "select " +

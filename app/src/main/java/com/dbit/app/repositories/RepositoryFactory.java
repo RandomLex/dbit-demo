@@ -33,6 +33,8 @@ public class RepositoryFactory {
 
     public static EmployeeRepository getEmployeeRepository() {
         switch (TYPE) {
+            case JPA:
+                return EmployeeRepositoryJpa.getInstance();
             case POSTGRES:
                 return EmployeeRepositoryPostgres.getInstance(datasource);
             case MEMORY:

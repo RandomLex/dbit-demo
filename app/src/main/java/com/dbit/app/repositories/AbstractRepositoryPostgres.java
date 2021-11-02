@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-public abstract class AbstractRepository<T extends AbstractEntity> implements Repository<T> {
+public abstract class AbstractRepositoryPostgres<T extends AbstractEntity> implements Repository<T> {
     private static final int POSITION_ID = 1;
     protected DataSource dataSource;
 

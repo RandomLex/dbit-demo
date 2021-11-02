@@ -3,17 +3,12 @@ package com.dbit.app.controllers;
 import com.dbit.app.repositories.EmployeeRepository;
 import com.dbit.app.repositories.RepositoryFactory;
 import com.dbit.model.Employee;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @WebServlet("/api/employees")
 public class EmployeeJsonController extends CommonJsonController {
