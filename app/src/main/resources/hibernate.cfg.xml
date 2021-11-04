@@ -33,10 +33,23 @@
 <!--        <mapping resource="City.hbm.xml"/>-->
 
         <!-- mapping classes -->
-        <mapping class="com.dbit.model.Title"/>
-        <mapping class="com.dbit.model.City"/>
-        <mapping class="com.dbit.model.Employee"/>
-        <mapping class="com.dbit.model.Department"/>
+<!--        <mapping class="com.dbit.model.Title"/>-->
+<!--        <mapping class="com.dbit.model.City"/>-->
+<!--        <mapping class="com.dbit.model.Employee"/>-->
+<!--        <mapping class="com.dbit.model.Department"/>-->
+
+
+
+<!--        <mapping class="com.dbit.model.examples.Car"/>-->
+
+<!--        <mapping class="com.dbit.model.examples.Report"/>-->
+
+<!--                <mapping class="com.dbit.model.examples.onetoone.Person"/>-->
+<!--                <mapping class="com.dbit.model.examples.onetoone.Credentials"/>-->
+
+                <mapping class="com.dbit.model.examples.many.Post"/>
+                <mapping class="com.dbit.model.examples.many.Tag"/>
+
 
     </session-factory>
 

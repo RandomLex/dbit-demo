@@ -1,19 +1,16 @@
 package com.dbit.app;
 
 import com.dbit.app.repositories.EntityManagerHelper;
-import com.dbit.model.City;
-import com.dbit.model.Department;
-import com.dbit.model.Employee;
-import com.dbit.model.Title;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import com.dbit.model.examples.many.Post;
+import com.dbit.model.examples.many.Tag;
+import com.dbit.model.examples.onetoone.Person;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Start {
     public static void main(String[] args) {
@@ -24,10 +21,150 @@ public class Start {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
+        // Many to Many
 
-        Employee employee = em.find(Employee.class, 1);
-        printWithPrefix(employee);
+//        em.createQuery("from Tag ", Tag.class).getResultList().forEach(Start::printWithPrefix);
+//        Post newYearPost = Post.builder()
+//                .name("Happy New Year")
+//                .tags(new HashSet<>())
+//                .build();
+//
+//        Post christmasPost = Post.builder()
+//                .name("Marry Christmas")
+//                .tags(new HashSet<>())
+//                .build();
+//
+//        Tag holiday = Tag.builder()
+//                .name("Holiday")
+//                .posts(new HashSet<>())
+//                .build();
+//
+//        Tag favorite = Tag.builder()
+//                .name("Favorite")
+//                .posts(new HashSet<>())
+//                .build();
+//
+//        newYearPost.addTag(holiday);
+//        newYearPost.addTag(favorite);
+//
+//        christmasPost.addTag(holiday);
+//
+//        em.persist(newYearPost);
+//        em.persist(christmasPost);
 
+        // remove one of post
+        Post newYear = em.find(Post.class, 3L);
+//        // -----BEGIN to remove one tag
+//        Optional<Tag> favoriteTag = newYear.getTags().stream().filter(tag -> "Holiday".equals(tag.getName())).findAny();
+//        favoriteTag.ifPresent(tag -> {
+//            newYear.removeTag(tag);
+//            em.merge(newYear);
+//        });
+        // -----END to remove one tag
+
+        // -----BEGIN to remove one post completely
+        newYear.getTags().clear();
+        em.merge(newYear);
+        em.remove(newYear);
+        // -----END to remove one post completely
+
+        //One-To-One
+//        em.createQuery("from Person ", Person.class).getResultList().forEach(Start::printWithPrefix);
+
+//        Credentials credentials;
+//        Person alex = Person.builder()
+//                .name("Alex")
+//                .credentials(credentials = Credentials.builder()
+//                        .login("alex")
+//                        .password("asd")
+//                        .build())
+//                .build();
+//        credentials.setPerson(alex);
+//        em.persist(alex);
+
+        //Embedded Class
+//        Car bmw = Car.builder()
+//                .model("BMW")
+//                .releaseDate(Date.from(LocalDate.of(2000, 10, 3).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+//                .engine(Engine.DIESEL)
+//                .audioSystem(AudioSystem.builder()
+//                        .musicPower(300)
+//                        .musicName("Sony")
+//                        .speakers(6)
+//                        .build())
+//                .build();
+//        em.persist(bmw);
+
+        //Enum
+//        Car bmw = Car.builder()
+//                .model("BMW")
+//                .releaseDate(Date.from(LocalDate.of(2000, 10, 3).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+//                .engine(Engine.DIESEL)
+//                .build();
+//
+//        Car lada = Car.builder()
+//                .model("Lada")
+//                .releaseDate(Date.from(LocalDate.of(2001, 12, 5).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+//                .engine(Engine.PETROL)
+//                .build();
+//        em.persist(bmw);
+//        em.persist(lada);
+
+        // Complex key
+//        em.createQuery("from Report ", Report.class).getResultList().forEach(Start::printWithPrefix);
+
+//        Report mfn = Report.builder()
+//                .id(ReportKey.builder()
+//                        .name("Налоги")
+//                        .type("Декларация")
+//                        .build())
+//                .recipient("MFN")
+//                .build();
+//
+//        Report gai = Report.builder()
+//                .id(ReportKey.builder()
+//                        .name("Оплата")
+//                        .type("Штраф")
+//                        .build())
+//                .recipient("GAI")
+//                .build();
+
+
+//        Report mfn = Report.builder()
+//                .name("Налоги")
+//                .type("Декларация")
+//                .recipient("MFN")
+//                .build();
+//
+//        Report gai = Report.builder()
+//                .name("Оплата")
+//                .type("Штраф")
+//                .recipient("GAI")
+//                .build();
+//        em.persist(mfn);
+//        em.persist(gai);
+
+
+        // Date conversion
+
+//        em.createQuery("from Car ", Car.class).getResultList().forEach(Start::printWithPrefix);
+
+//        Car bmw = Car.builder()
+//                .model("BMW")
+//                .releaseDate(Date.from(LocalDate.of(2000, 10, 3).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+//                .build();
+//
+//        Car lada = Car.builder()
+//                .model("Lada")
+//                .releaseDate(Date.from(LocalDate.of(2001, 12, 5).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+//                .build();
+//        em.persist(bmw);
+//        em.persist(lada);
+
+
+//        Employee employee = em.find(Employee.class, 1);
+//        printWithPrefix(employee);
+//
         //One-To-Many
 //        Department department = em.find(Department.class, 1);
 //        printWithPrefix(department);
@@ -49,7 +186,6 @@ public class Start {
 //        TypedQuery<Employee> employeesQuery = em.createQuery("from Employee", Employee.class);
 //        List<Employee> employees = employeesQuery.getResultList();
 //        employees.stream().forEach(System.out::println);
-
 
 
 //        Title managerTitle = new Title().withName("Менеджер");
