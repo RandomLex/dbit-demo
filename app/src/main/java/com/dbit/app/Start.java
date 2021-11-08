@@ -1,16 +1,12 @@
 package com.dbit.app;
 
 import com.dbit.app.repositories.EntityManagerHelper;
-import com.dbit.model.examples.many.Post;
-import com.dbit.model.examples.many.Tag;
-import com.dbit.model.examples.onetoone.Person;
+import com.dbit.model.hierarchy.table.Animal;
+import com.dbit.model.hierarchy.table.Bird;
+import com.dbit.model.hierarchy.table.Fish;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Start {
     public static void main(String[] args) {
@@ -21,7 +17,30 @@ public class Start {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
+
+
+
+        //Mapped
+        //It doesn't work because Animal is not an Entity
+//        em.createQuery("from Animal ", Animal.class).getResultList().forEach(Start::printWithPrefix);
+
+        Bird eagle = Bird.builder()
+                .origin("Eagle")
+                .flyable(true)
+                .growing("Nested")
+                .build();
+
+        Fish shark = Fish.builder()
+                .origin("Shark")
+                .skeleton("Cartilaginous")
+                .poisoned(false)
+                .build();
+
+        em.persist(eagle);
+        em.persist(shark);
+
         // Many to Many
+
 
 //        em.createQuery("from Tag ", Tag.class).getResultList().forEach(Start::printWithPrefix);
 //        Post newYearPost = Post.builder()
@@ -53,7 +72,7 @@ public class Start {
 //        em.persist(christmasPost);
 
         // remove one of post
-        Post newYear = em.find(Post.class, 3L);
+//        Post newYear = em.find(Post.class, 3L);
 //        // -----BEGIN to remove one tag
 //        Optional<Tag> favoriteTag = newYear.getTags().stream().filter(tag -> "Holiday".equals(tag.getName())).findAny();
 //        favoriteTag.ifPresent(tag -> {
@@ -63,9 +82,9 @@ public class Start {
         // -----END to remove one tag
 
         // -----BEGIN to remove one post completely
-        newYear.getTags().clear();
-        em.merge(newYear);
-        em.remove(newYear);
+//        newYear.getTags().clear();
+//        em.merge(newYear);
+//        em.remove(newYear);
         // -----END to remove one post completely
 
         //One-To-One

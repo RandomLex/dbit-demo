@@ -2,7 +2,7 @@ create table car
 (
     id           bigserial   not null,
     model        varchar(20) not null,
-    release_date date        null
+    release_date date null
 );
 
 
@@ -51,4 +51,81 @@ create table post_tag
 (
     post_id int8 null,
     tag_id  int8 null
+);
+
+--mapped
+
+create table bird
+(
+    id      bigserial   not null,
+    origin  varchar(20) not null,
+    flyable bool null,
+    growing varchar(20) null
+);
+
+create table fish
+(
+    id       bigserial   not null,
+    origin   varchar(20) not null,
+    skeleton varchar(20) null,
+    poisoned bool null
+);
+
+--single table
+
+create table animal
+(
+    id         bigserial   not null,
+    origin     varchar(20) not null,
+    flyable    bool null,
+    growing    varchar(20) null,
+    skeleton   varchar(20) null,
+    poisoned   bool null,
+    class_name varchar(20) not null
+);
+
+--join
+
+create table animal
+(
+    id         bigserial   not null,
+    origin     varchar(20) not null,
+    class_name varchar(20) not null
+);
+
+create table bird
+(
+    id      int8 not null,
+    flyable bool null,
+    growing varchar(20) null
+);
+
+create table fish
+(
+    id       int8 not null,
+    skeleton varchar(20) null,
+    poisoned bool null
+);
+
+--per table
+create table bird
+(
+    id      bigserial   not null,
+    origin  varchar(20) not null,
+    flyable bool null,
+    growing varchar(20) null
+);
+
+create table fish
+(
+    id       bigserial   not null,
+    origin   varchar(20) not null,
+    skeleton varchar(20) null,
+    poisoned bool null
+);
+
+create table sequence_table
+(
+    name    varchar(20),
+    last_id int8
 );
