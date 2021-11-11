@@ -1,12 +1,19 @@
 package com.dbit.app;
 
+import com.dbit.dto.ProductDto;
 import com.dbit.app.repositories.EntityManagerHelper;
-import com.dbit.model.hierarchy.table.Animal;
-import com.dbit.model.hierarchy.table.Bird;
-import com.dbit.model.hierarchy.table.Fish;
+import com.dbit.dto.ResultDto;
+import com.dbit.model.examples.Product;
+import com.dbit.model.examples.ProductType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CompoundSelection;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 public class Start {
     public static void main(String[] args) {
@@ -19,25 +26,119 @@ public class Start {
 
 
 
+        //select left outer explicit join with dto
+//        TypedQuery<ProductType> query = em.createQuery(
+//                "select pt from ProductType pt join fetch pt.products", ProductType.class);
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+
+        //select left outer explicit join with dto
+//        TypedQuery<ResultDto> query = em.createQuery(
+//                "select new com.dbit.dto.ResultDto(p.name, pt.name, p.price) from Product p, ProductType pt where p.productType = pt and p.price > 1000", ResultDto.class);
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+
+        //select left outer explicit join with dto
+//        TypedQuery<ResultDto> query = em.createQuery(
+//                "select new com.dbit.dto.ResultDto(p.name, pt.name, p.price) from Product p join p.productType pt", ResultDto.class);
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+        //select left outer explicit join
+//        TypedQuery<ProductType> query = em.createQuery("select pt from Product p join p.productType pt", ProductType.class);
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+        //select left outer implicit join
+//        TypedQuery<ProductType> query = em.createQuery("select p.productType from Product p", ProductType.class);
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+        //Named Query select several fields with filtering by param
+//        TypedQuery<ProductDto> query = em.createNamedQuery("byName", ProductDto.class);
+//        query.setParameter("name", "HP");
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+        //select several fields with filtering by param
+//        TypedQuery<ProductDto> query = em.createQuery("select new com.dbit.dto.ProductDto(p.name, p.price) from Product p where p.name = :name", ProductDto.class);
+//        query.setParameter("name", "HP");
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+        //select several fields with filtering directly shown
+//        TypedQuery<ProductDto> query = em.createQuery("select new com.dbit.dto.ProductDto(p.name, p.price) from Product p where p.name like 'A%'", ProductDto.class);
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Product> query = cb.createQuery(Product.class);
+        Root<Product> productRoot = query.from(Product.class);
+        ParameterExpression<String> nameExpression = cb.parameter(String.class, "name");
+        query.select(productRoot).where(cb.like(productRoot.get("name"), nameExpression));
+        em.createQuery(query).setParameter("name", "A%").getResultList().forEach(Start::printWithPrefix);
+
+        //select several fields to dto
+//        TypedQuery<ProductDto> query = em.createQuery("select new com.dbit.dto.ProductDto(p.name, p.price) from Product p", ProductDto.class);
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+//        //select several fields untyped
+//        Query query = em.createQuery("select p.name, p.price from Product p");
+//        query.getResultList().stream().flatMap(a -> Arrays.stream((Object[]) a)).forEach(Start::printWithPrefix);
+//
+        //select field
+//        TypedQuery<String> query = em.createQuery("select p.name from Product p", String.class);
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<Product> query = cb.createQuery(Product.class);
+//        Root<Product> productRoot = query.from(Product.class);
+//        CompoundSelection<Product> name = cb.construct(Product.class, productRoot.get("name"));
+//        query.select(name);
+//        em.createQuery(query).getResultList().forEach(product -> printWithPrefix(product.getName()));
+
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<String> query = cb.createQuery(String.class);
+//        Root<Product> productRoot = query.from(Product.class);
+//        query.select(productRoot.get("name"));
+//        em.createQuery(query).getResultList().forEach(Start::printWithPrefix);
+
+
+
+
+//        //select simple
+//        TypedQuery<Product> query = em.createQuery("select p from Product p", Product.class);
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<Product> query = cb.createQuery(Product.class);
+//        Root<Product> productRoot = query.from(Product.class);
+//        query.select(productRoot);
+//        em.createQuery(query).getResultList().forEach(Start::printWithPrefix);
+
+
+        //from
+//        TypedQuery<Product> query = em.createQuery("from Product", Product.class);
+//        query.getResultList().forEach(Start::printWithPrefix);
+
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<Product> query = cb.createQuery(Product.class);
+//        query.from(Product.class);
+//        em.createQuery(query).getResultList().forEach(Start::printWithPrefix);
+
 
         //Mapped
         //It doesn't work because Animal is not an Entity
 //        em.createQuery("from Animal ", Animal.class).getResultList().forEach(Start::printWithPrefix);
 
-        Bird eagle = Bird.builder()
-                .origin("Eagle")
-                .flyable(true)
-                .growing("Nested")
-                .build();
-
-        Fish shark = Fish.builder()
-                .origin("Shark")
-                .skeleton("Cartilaginous")
-                .poisoned(false)
-                .build();
-
-        em.persist(eagle);
-        em.persist(shark);
+//        Bird eagle = Bird.builder()
+//                .origin("Eagle")
+//                .flyable(true)
+//                .growing("Nested")
+//                .build();
+//
+//        Fish shark = Fish.builder()
+//                .origin("Shark")
+//                .skeleton("Cartilaginous")
+//                .poisoned(false)
+//                .build();
+//
+//        em.persist(eagle);
+//        em.persist(shark);
 
         // Many to Many
 

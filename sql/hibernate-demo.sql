@@ -129,3 +129,24 @@ create table sequence_table
     name    varchar(20),
     last_id int8
 );
+
+create table product (
+                         id bigserial not null,
+                         "name" varchar(20) not null,
+                         price int4,
+                         product_type int8 null
+);
+
+create table product_type (
+                              id bigserial not null,
+                              "name" varchar(20) not null
+);
+
+insert into product_type(name) values('Computer');
+insert into product_type(name) values('Smartphone');
+
+insert into product(name, price, product_type) values('Apple', 2000, 1);
+insert into product(name, price, product_type) values('Asus', 1200, 1);
+insert into product(name, price, product_type) values('HP', 1500, 1);
+insert into product(name, price, product_type) values('Samsung', 1000, 2);
+insert into product(name, price, product_type) values('Xiaomi', 700, 2);

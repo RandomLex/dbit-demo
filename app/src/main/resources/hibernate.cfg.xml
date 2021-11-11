@@ -27,43 +27,46 @@
 
 
         <!-- mapping files -->
-<!--        <mapping resource="Title.hbm.xml"/>-->
-<!--        <mapping resource="Employee.hbm.xml"/>-->
-<!--        <mapping resource="Department.hbm.xml"/>-->
-<!--        <mapping resource="City.hbm.xml"/>-->
+        <!--        <mapping resource="Title.hbm.xml"/>-->
+        <!--        <mapping resource="Employee.hbm.xml"/>-->
+        <!--        <mapping resource="Department.hbm.xml"/>-->
+        <!--        <mapping resource="City.hbm.xml"/>-->
 
         <!-- mapping classes -->
-<!--        <mapping class="com.dbit.model.Title"/>-->
-<!--        <mapping class="com.dbit.model.City"/>-->
-<!--        <mapping class="com.dbit.model.Employee"/>-->
-<!--        <mapping class="com.dbit.model.Department"/>-->
+        <!--        <mapping class="com.dbit.model.Title"/>-->
+        <!--        <mapping class="com.dbit.model.City"/>-->
+        <!--        <mapping class="com.dbit.model.Employee"/>-->
+        <!--        <mapping class="com.dbit.model.Department"/>-->
 
 
+        <!--        <mapping class="com.dbit.model.examples.Car"/>-->
 
-<!--        <mapping class="com.dbit.model.examples.Car"/>-->
+        <!--        <mapping class="com.dbit.model.examples.Report"/>-->
 
-<!--        <mapping class="com.dbit.model.examples.Report"/>-->
+        <!--                <mapping class="com.dbit.model.examples.onetoone.Person"/>-->
+        <!--                <mapping class="com.dbit.model.examples.onetoone.Credentials"/>-->
 
-<!--                <mapping class="com.dbit.model.examples.onetoone.Person"/>-->
-<!--                <mapping class="com.dbit.model.examples.onetoone.Credentials"/>-->
+        <!--                <mapping class="com.dbit.model.examples.many.Post"/>-->
+        <!--                <mapping class="com.dbit.model.examples.many.Tag"/>-->
 
-<!--                <mapping class="com.dbit.model.examples.many.Post"/>-->
-<!--                <mapping class="com.dbit.model.examples.many.Tag"/>-->
+        <!--                <mapping class="com.dbit.model.hierarchy.mapped.Bird"/>-->
+        <!--                <mapping class="com.dbit.model.hierarchy.mapped.Fish"/>-->
 
-<!--                <mapping class="com.dbit.model.hierarchy.mapped.Bird"/>-->
-<!--                <mapping class="com.dbit.model.hierarchy.mapped.Fish"/>-->
+        <!--        <mapping class="com.dbit.model.hierarchy.single.Animal"/>-->
+        <!--        <mapping class="com.dbit.model.hierarchy.single.Bird"/>-->
+        <!--        <mapping class="com.dbit.model.hierarchy.single.Fish"/>-->
 
-<!--        <mapping class="com.dbit.model.hierarchy.single.Animal"/>-->
-<!--        <mapping class="com.dbit.model.hierarchy.single.Bird"/>-->
-<!--        <mapping class="com.dbit.model.hierarchy.single.Fish"/>-->
+        <!--        <mapping class="com.dbit.model.hierarchy.join.Animal"/>-->
+        <!--        <mapping class="com.dbit.model.hierarchy.join.Bird"/>-->
+        <!--        <mapping class="com.dbit.model.hierarchy.join.Fish"/>-->
 
-<!--        <mapping class="com.dbit.model.hierarchy.join.Animal"/>-->
-<!--        <mapping class="com.dbit.model.hierarchy.join.Bird"/>-->
-<!--        <mapping class="com.dbit.model.hierarchy.join.Fish"/>-->
+        <!--        <mapping class="com.dbit.model.hierarchy.table.Animal"/>-->
+        <!--        <mapping class="com.dbit.model.hierarchy.table.Bird"/>-->
+        <!--        <mapping class="com.dbit.model.hierarchy.table.Fish"/>-->
 
-        <mapping class="com.dbit.model.hierarchy.table.Animal"/>
-        <mapping class="com.dbit.model.hierarchy.table.Bird"/>
-        <mapping class="com.dbit.model.hierarchy.table.Fish"/>
+        <mapping class="com.dbit.model.examples.ProductType"/>
+        <mapping class="com.dbit.model.examples.Product"/>
+
 
     </session-factory>
 
