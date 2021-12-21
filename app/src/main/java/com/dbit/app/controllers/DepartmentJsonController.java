@@ -1,8 +1,7 @@
 package com.dbit.app.controllers;
 
-import com.dbit.app.repositories.EmployeeRepository;
-import com.dbit.app.repositories.RepositoryFactory;
-import com.dbit.model.Employee;
+import com.dbit.app.repositories.DepartmentRepository;
+import com.dbit.model.Department;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,17 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.dbit.app.controllers.EmployeesController.EMPLOYEE_REPOSITORY_PREFIX;
-
-@WebServlet("/api/employees")
-public class EmployeeJsonController extends CommonJsonController {
+@WebServlet("/api/departments")
+public class DepartmentJsonController extends CommonJsonController {
+    static final String DEPARTMENT_REPOSITORY_PREFIX = "departmentRepository";
     private static final String ID = "id";
-    private EmployeeRepository repository;
+    private DepartmentRepository repository;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        repository = ctx.getBean(EMPLOYEE_REPOSITORY_PREFIX + type, EmployeeRepository.class);
+        repository = ctx.getBean(DEPARTMENT_REPOSITORY_PREFIX + type, DepartmentRepository.class);
     }
 
     @Override
@@ -35,19 +33,19 @@ public class EmployeeJsonController extends CommonJsonController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Employee employee = toEntity(Employee.class, req);
-        writeEntityToBody(repository.save(employee), resp);
+        Department department = toEntity(Department.class, req);
+        writeEntityToBody(repository.save(department), resp);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Employee employee = toEntity(Employee.class, req);
-        writeEntityToBody(repository.save(employee), resp);
+        Department department = toEntity(Department.class, req);
+        writeEntityToBody(repository.save(department), resp);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Employee employee = toEntity(Employee.class, req);
-        writeEntityToBody(repository.remove(employee), resp);
+        Department department = toEntity(Department.class, req);
+        writeEntityToBody(repository.remove(department), resp);
     }
 }

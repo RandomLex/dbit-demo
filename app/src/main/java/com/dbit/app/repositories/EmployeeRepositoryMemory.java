@@ -3,6 +3,7 @@ package com.dbit.app.repositories;
 
 import com.dbit.model.Employee;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,25 +13,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
-public class EmployeeRepositoryInMemory implements EmployeeRepository {
+@Component
+public class EmployeeRepositoryMemory extends AbstractRepositoryMemory<Employee> implements EmployeeRepository {
     private final Map<Integer, Employee> map = new ConcurrentHashMap<>();
 
-    private static volatile EmployeeRepositoryInMemory instance;
-
-    private EmployeeRepositoryInMemory() {
-        //singleton
-    }
-
-    public static EmployeeRepositoryInMemory getInstance() {
-        if (instance == null) {
-            synchronized (EmployeeRepositoryInMemory.class) {
-                if (instance == null) {
-                    instance = new EmployeeRepositoryInMemory();
-                }
-            }
-        }
-        return instance;
-    }
 
     @Override
     public List<Employee> findAll() {

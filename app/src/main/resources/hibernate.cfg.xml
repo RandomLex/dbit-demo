@@ -33,10 +33,10 @@
         <!--        <mapping resource="City.hbm.xml"/>-->
 
         <!-- mapping classes -->
-        <!--        <mapping class="com.dbit.model.Title"/>-->
-        <!--        <mapping class="com.dbit.model.City"/>-->
-        <!--        <mapping class="com.dbit.model.Employee"/>-->
-        <!--        <mapping class="com.dbit.model.Department"/>-->
+                <mapping class="com.dbit.model.Title"/>
+                <mapping class="com.dbit.model.City"/>
+                <mapping class="com.dbit.model.Employee"/>
+                <mapping class="com.dbit.model.Department"/>
 
 
         <!--        <mapping class="com.dbit.model.examples.Car"/>-->
@@ -64,8 +64,8 @@
         <!--        <mapping class="com.dbit.model.hierarchy.table.Bird"/>-->
         <!--        <mapping class="com.dbit.model.hierarchy.table.Fish"/>-->
 
-        <mapping class="com.dbit.model.examples.ProductType"/>
-        <mapping class="com.dbit.model.examples.Product"/>
+<!--        <mapping class="com.dbit.model.examples.ProductType"/>-->
+<!--        <mapping class="com.dbit.model.examples.Product"/>-->
 
 
     </session-factory>

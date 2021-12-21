@@ -1,6 +1,7 @@
 package com.dbit.app.repositories;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -34,12 +35,19 @@ public class RepositoryFactory {
     public static EmployeeRepository getEmployeeRepository() {
         switch (TYPE) {
             case JPA:
-                return EmployeeRepositoryJpa.getInstance();
+//                return EmployeeRepositoryJpa.getInstance();
             case POSTGRES:
                 return EmployeeRepositoryPostgres.getInstance(datasource);
             case MEMORY:
             default:
-                return EmployeeRepositoryInMemory.getInstance();
+//                return EmployeeRepositoryMemory.getInstance();
+                return null;
         }
+    }
+
+    public static String getType() {
+        String type = TYPE.getType();
+        type = StringUtils.capitalize(type);
+        return type;
     }
 }
