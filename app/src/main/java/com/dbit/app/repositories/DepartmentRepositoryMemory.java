@@ -20,6 +20,9 @@ public class DepartmentRepositoryMemory extends AbstractRepositoryMemory<Departm
 
     @Override
     public List<Department> findAll() {
+        if (true) {
+            throw new IllegalArgumentException("Test exception");
+        }
         if (map.isEmpty()) {
             return new ArrayList<>();
         }
