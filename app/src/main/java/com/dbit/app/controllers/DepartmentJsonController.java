@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class DepartmentJsonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Department> getDepartment(@PathVariable int id) {
+    public ResponseEntity<Department> getDepartment(@PathVariable int id, HttpServletRequest req) { //NOSONAR req is needed for aspect logging
         return ResponseEntity.of(repository.find(id));
     }
 

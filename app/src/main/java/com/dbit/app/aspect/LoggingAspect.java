@@ -10,8 +10,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Optional;
 
 @Aspect
 @Slf4j
@@ -28,9 +31,15 @@ public class LoggingAspect {
         // pointcut
     }
 
-//    @Before("controllers()")
+    @Before("controllers()")
     public void before(JoinPoint jp) {
-        log.info("Logging before controller's method: {}", jp.getSignature().getName());
+//        Arrays.stream(jp.getArgs()).forEach(arg -> log.info(arg.toString()));
+
+        Arrays.stream(jp.getArgs())
+                .filter(HttpServletRequest.class::isInstance)
+                .findAny()
+                .map(HttpServletRequest.class::cast)
+                .ifPresent(req -> log.info("{} {}", req.getMethod(), ServletUriComponentsBuilder.fromRequest(req).toUriString()));
     }
 
 //    @After("controllers()")
