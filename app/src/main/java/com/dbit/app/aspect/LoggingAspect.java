@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Optional;
 
-@Aspect
+//@Aspect
 @Slf4j
 @Component
 public class LoggingAspect {

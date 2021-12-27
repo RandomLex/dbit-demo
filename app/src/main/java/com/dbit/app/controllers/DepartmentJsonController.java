@@ -51,7 +51,7 @@ public class DepartmentJsonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Department> getDepartment(@PathVariable int id, HttpServletRequest req) { //NOSONAR req is needed for aspect logging
+    public ResponseEntity<Department> getDepartment(@PathVariable int id) {
         return ResponseEntity.of(repository.find(id));
     }
 
