@@ -1,5 +1,6 @@
 package com.dbit.app.repositories;
 
+import com.dbit.app.aspect.JpaTransaction;
 import com.dbit.app.exceptions.DatabaseException;
 import com.dbit.model.AbstractEntity;
 import com.dbit.model.Employee;
@@ -21,24 +22,9 @@ public abstract class AbstractRepositoryJpa<T extends AbstractEntity> implements
     protected abstract TypedQuery<T> findAllQuery();
 
     @Override
+    @JpaTransaction
     public List<T> findAll() {
-        List<T> entities = new ArrayList<>();
-        EntityManager em = null;
-        try {
-            em = helper.getEntityManager();
-            em.getTransaction().begin();
-
-            entities = findAllQuery().getResultList();
-
-            em.getTransaction().commit();
-            em.close();
-
-        } catch (Exception e) {
-            safeRollback(em, e);
-        } finally {
-            quietCloseEntityManager(em);
-        }
-        return entities;
+        return findAllQuery().getResultList();
     }
 
     @Override
@@ -50,7 +36,7 @@ public abstract class AbstractRepositoryJpa<T extends AbstractEntity> implements
 
         em.getTransaction().commit();
         em.close();
-        return Optional.ofNullable(entity);
+        return Optional.ofNullable(em.find(getType(), id));
     }
 
     @Override

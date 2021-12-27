@@ -28,18 +28,18 @@ public class LoggingAspect {
         // pointcut
     }
 
-    @Before("controllers()")
+//    @Before("controllers()")
     public void before(JoinPoint jp) {
         log.info("Logging before controller's method: {}", jp.getSignature().getName());
     }
 
-    @After("controllers()")
+//    @After("controllers()")
     public void after(JoinPoint jp) {
         log.info("Logging after controller's method: {}", jp.getSignature().getName());
     }
 
     @SneakyThrows
-    @Around("controllers()")
+//    @Around("controllers()")
     public Object around(ProceedingJoinPoint jp) {
         log.info("Logging around before method: {}", jp.getSignature().getName());
         log.info("----------------------------");
