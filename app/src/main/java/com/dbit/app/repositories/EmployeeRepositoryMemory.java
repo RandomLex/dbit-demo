@@ -1,7 +1,7 @@
 package com.dbit.app.repositories;
 
 
-import com.dbit.model.Employee;
+import com.dbit.model.dbit.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

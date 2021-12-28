@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name = "com.dbit.model.Department" table = "department">
+    <class name = "com.dbit.model.dbit.Department" table = "department">
 
         <id name = "id" type = "int">
             <column name="id"/>
@@ -14,13 +14,13 @@
         <property name="name" column="name"/>
 
         <many-to-one name="city"
-                     class="com.dbit.model.City"
+                     class="com.dbit.model.dbit.City"
                      column="city_id"
                      not-null="false"/>
 
         <set name="employees" table="department_employee" inverse="true">
             <key column="department_id"/>
-            <many-to-many column="employee_id" class="com.dbit.model.Employee"/>
+            <many-to-many column="employee_id" class="com.dbit.model.dbit.Employee"/>
         </set>
 
     </class>

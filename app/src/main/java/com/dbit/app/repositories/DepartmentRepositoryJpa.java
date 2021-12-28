@@ -1,7 +1,6 @@
 package com.dbit.app.repositories;
 
-import com.dbit.model.Department;
-import com.dbit.model.Employee;
+import com.dbit.model.dbit.Department;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.TypedQuery;

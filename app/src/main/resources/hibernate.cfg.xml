@@ -33,10 +33,10 @@
         <!--        <mapping resource="City.hbm.xml"/>-->
 
         <!-- mapping classes -->
-                <mapping class="com.dbit.model.Title"/>
-                <mapping class="com.dbit.model.City"/>
-                <mapping class="com.dbit.model.Employee"/>
-                <mapping class="com.dbit.model.Department"/>
+                <mapping class="com.dbit.model.dbit.Title"/>
+                <mapping class="com.dbit.model.dbit.City"/>
+                <mapping class="com.dbit.model.dbit.Employee"/>
+                <mapping class="com.dbit.model.dbit.Department"/>
 
 
         <!--        <mapping class="com.dbit.model.examples.Car"/>-->

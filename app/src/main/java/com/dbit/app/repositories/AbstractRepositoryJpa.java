@@ -2,16 +2,12 @@ package com.dbit.app.repositories;
 
 import com.dbit.app.aspect.JpaTransaction;
 import com.dbit.app.exceptions.DatabaseException;
-import com.dbit.model.AbstractEntity;
-import com.dbit.model.Employee;
+import com.dbit.model.dbit.AbstractEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

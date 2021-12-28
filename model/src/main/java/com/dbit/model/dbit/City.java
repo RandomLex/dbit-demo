@@ -1,4 +1,4 @@
-package com.dbit.model;
+package com.dbit.model.dbit;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;

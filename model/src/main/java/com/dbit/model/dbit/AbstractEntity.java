@@ -1,4 +1,4 @@
-package com.dbit.model;
+package com.dbit.model.dbit;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.dbit.app.repositories;
 
 import com.dbit.app.exceptions.DatabaseException;
-import com.dbit.model.AbstractEntity;
+import com.dbit.model.dbit.AbstractEntity;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;

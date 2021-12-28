@@ -1,15 +1,11 @@
 package com.dbit.app.repositories;
 
-import com.dbit.model.Employee;
-import com.dbit.model.Title;
+import com.dbit.model.dbit.Employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import javax.xml.transform.Templates;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

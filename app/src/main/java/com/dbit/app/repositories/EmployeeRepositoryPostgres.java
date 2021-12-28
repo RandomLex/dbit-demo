@@ -1,9 +1,9 @@
 package com.dbit.app.repositories;
 
-import com.dbit.model.City;
-import com.dbit.model.Department;
-import com.dbit.model.Employee;
-import com.dbit.model.Title;
+import com.dbit.model.dbit.City;
+import com.dbit.model.dbit.Department;
+import com.dbit.model.dbit.Employee;
+import com.dbit.model.dbit.Title;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
