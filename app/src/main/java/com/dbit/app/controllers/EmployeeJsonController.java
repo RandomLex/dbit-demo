@@ -1,53 +1,117 @@
 package com.dbit.app.controllers;
 
 import com.dbit.app.repositories.EmployeeRepository;
-import com.dbit.app.repositories.RepositoryFactory;
 import com.dbit.model.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-import static com.dbit.app.controllers.EmployeesController.EMPLOYEE_REPOSITORY_PREFIX;
+import static org.springframework.util.StringUtils.capitalize;
 
-@WebServlet("/api/employees")
-public class EmployeeJsonController extends CommonJsonController {
-    private static final String ID = "id";
+@RestController
+@RequestMapping(path = "/api/employees", produces = "application/json")
+public class EmployeeJsonController {
+
+    static final String EMPLOYEE_REPOSITORY_PREFIX = "employeeRepository";
+
+    private final Map<String, EmployeeRepository> repositoryMap;
+    @Value("${repository.type}")
+    private String repositoryType;
+
     private EmployeeRepository repository;
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        repository = ctx.getBean(EMPLOYEE_REPOSITORY_PREFIX + type, EmployeeRepository.class);
+    @Autowired
+    public EmployeeJsonController(Map<String, EmployeeRepository> repositoryMap) {
+        this.repositoryMap = repositoryMap;
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter(ID);
-        writeEntityToBody(id == null
-                ? repository.findAll()
-                : repository.find(Integer.parseInt(id)), resp);
-
+    @PostConstruct
+    public void init()  {
+        repository = repositoryMap.get(EMPLOYEE_REPOSITORY_PREFIX + capitalize(repositoryType));
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Employee employee = toEntity(Employee.class, req);
-        writeEntityToBody(repository.save(employee), resp);
+    @GetMapping
+    public List<Employee> getAll() {
+        return repository.findAll();
     }
 
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Employee employee = toEntity(Employee.class, req);
-        writeEntityToBody(repository.save(employee), resp);
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> getEmployee(@PathVariable int id) {
+        return ResponseEntity.of(repository.find(id));
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Employee employee = toEntity(Employee.class, req);
-        writeEntityToBody(repository.remove(employee), resp);
+    @PostMapping
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+        return ResponseEntity.ok(repository.save(employee));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateEmployee(
+            @PathVariable int id,
+            @RequestBody Employee employee) {
+        if (employee != null && id != employee.getId()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Employee id must be equal with id in path: " + id + " != " + employee.getId());
+        }
+        return ResponseEntity.ok(repository.save(employee));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Employee> deleteEmployee(@PathVariable int id) {
+        Optional<Employee> employee = repository.find(id);
+        if (employee.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.of(repository.remove(employee.get()));
+    }
+
+//    private static final String ID = "id";
+//    private EmployeeRepository repository;
+//
+//    @Override
+//    public void init(ServletConfig config) throws ServletException {
+//        super.init(config);
+//        repository = ctx.getBean(EMPLOYEE_REPOSITORY_PREFIX + type, EmployeeRepository.class);
+//    }
+//
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String id = req.getParameter(ID);
+//        writeEntityToBody(id == null
+//                ? repository.findAll()
+//                : repository.find(Integer.parseInt(id)), resp);
+//
+//    }
+//
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        Employee employee = toEntity(Employee.class, req);
+//        writeEntityToBody(repository.save(employee), resp);
+//    }
+//
+//    @Override
+//    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        Employee employee = toEntity(Employee.class, req);
+//        writeEntityToBody(repository.save(employee), resp);
+//    }
+//
+//    @Override
+//    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        Employee employee = toEntity(Employee.class, req);
+//        writeEntityToBody(repository.remove(employee), resp);
+//    }
 }
