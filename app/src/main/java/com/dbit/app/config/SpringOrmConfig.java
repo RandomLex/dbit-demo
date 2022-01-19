@@ -4,8 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -43,6 +46,19 @@ public class SpringOrmConfig {
         properties.setProperty("hibernate.dbcp.maxWaitMillis", "-1");
         properties.setProperty("hibernate.enable_lazy_load_no_trans", "true");
         return properties;
+    }
+
+    @Bean
+    public JpaTransactionManager jpaTransactionManager(@Autowired LocalContainerEntityManagerFactoryBean factoryBean) {
+        return new JpaTransactionManager(factoryBean.getObject());
+//        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+//        jpaTransactionManager.setEntityManagerFactory(factoryBean.getObject());
+//        return jpaTransactionManager;
+    }
+
+    @Bean
+    public TransactionTemplate transactionTemplate(@Autowired PlatformTransactionManager transactionManager) {
+        return new TransactionTemplate(transactionManager);
     }
 
 }
