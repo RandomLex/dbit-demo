@@ -10,7 +10,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 public class EmployeeService extends AbstractService<Employee> {
 
     public EmployeeService(@Qualifier("employeeRepositoryOrm") EmployeeRepository employeeRepository, TransactionTemplate transactionTemplate) {
-        super(employeeRepository, transactionTemplate);
+        super(employeeRepository);
     }
 
 

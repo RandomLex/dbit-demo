@@ -56,8 +56,8 @@ public abstract class AbstractRepositoryOrm<T extends AbstractEntity> implements
     public Optional<T> remove(T entity) {
         Optional<T> foundEntityOptional = find(entity.getId());
         if (foundEntityOptional.isPresent()) {
-            em.remove(entity);
-            return foundEntityOptional;
+            em.remove(foundEntityOptional.get());
+            return Optional.of(entity);
         }
         return Optional.empty();
     }
