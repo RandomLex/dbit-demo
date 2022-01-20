@@ -54,7 +54,7 @@ public class EmployeeJsonController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployee(@PathVariable int id) {
-        return ResponseEntity.of(employeeService.get(id));
+        return ResponseEntity.of(employeeService.getEmployee(id));
     }
 
     @PostMapping

@@ -23,6 +23,7 @@
         <servlet.version>4.0.1</servlet.version>
         <spring.version>5.2.19.RELEASE</spring.version>
         <aspectjweaver.version>1.9.7</aspectjweaver.version>
+        <spring-data-jpa.version>2.3.6.RELEASE</spring-data-jpa.version>
     </properties>
 
     <dependencies>
@@ -149,6 +150,11 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-tx</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>${spring-data-jpa.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
